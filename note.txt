@@ -1,0 +1,23 @@
+ORM = Object Relation Mapping. Mempermudah melakukan query ke database, Mempermudah melakukan konfigurasi, lebih aman, query yg dijalankan akan dibungkus dengan sebuah method
+
+DDL, => Database Definition Language. Create Database ? Drop Database ? Create Table ? Alter Table
+DML, => Database Manipulation Language. SELECT, INSERT, UPDATE, DELETE dst.
+
+SELECT => Keyword (column selected ?) FROM (table name).
+SELECT => Keyword (column selected ?) FROM (table name) WHERE (condition) = (value).
+
+INSERT => Keyword (table destination) (Column Insert ?) VALUES (values inserted).
+
+INSERT INTO public.tb_users(
+	id, name, email, password)
+	VALUES (?, ?, ?, ?);
+
+UPDATE => Keyword (table destination) SET (Column selected with value) where condition = value
+
+UPDATE public.tb_users
+	SET id=?, name=?, email=?, password=?, "isHandsome"=?
+	WHERE <condition>;
+
+DELETE => Keyword (table destination) where condition
+DELETE FROM public.tb_users
+	WHERE <condition>;
