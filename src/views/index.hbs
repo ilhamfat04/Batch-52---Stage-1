@@ -1,113 +1,133 @@
 <html>
-
-<head>
-    <title>Personal Web</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/assets/css/index.css" />
-</head>
-
-<body>
-    <nav style="background-color: #f4f3f3; height: 75px;">
-        <div style="display: flex; align-items: center; height: 100%; margin-left: 30px; margin-right: 30px;">
-            <ul style="display: flex; list-style-type: none; gap: 50px; align-items: center;">
-                <li>
-                    <img src="/assets/image/dumbways.png" style="height: 50px;" />
-                </li>
-                <li class="nav-link nav-collapse">
-                    <a href="/">
-                        Home
-                    </a>
-                </li>
-                <li class="nav-link nav-collapse">
-                    <a href="/blog">
-                        Blog
-                    </a>
-                </li>
-                <li class="nav-link nav-collapse">
-                    <a href="/testimonial">
-                        Testimonial
-                    </a>
-                </li>
+    <head>
+      <title>Personal Web</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    </head>
+    <body>
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            <img src="/assets/images/logo.png" id="image" />
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 ms-5 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link fw-semibold active text-danger" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item ms-3">
+                <a class="nav-link" href="/blog">Blog</a>
+              </li>
             </ul>
-            <div style="display: flex; width: 100%; justify-content: end;">
-                <a href="/contact" class="btn-contact nav-collapse">Contact me</a>
-                <i class="fa-solid fa-bars fa-2x" style="cursor: pointer;" id="hamburger-button"
-                    onclick="openHamburger()"></i>
+
+            <div class="d-flex justify-content-end">
+              <ul class="navbar-nav me-auto mb-2 ms-5 mb-lg-0">
+                {{#if isLogin}}
+                  <li class="nav-item">
+                    <a class="nav-link fw-bold active text-danger">Hello, {{user}}</a>
+                  </li>
+                  <li class="nav-item ms-3">
+                    <a class="nav-link" href="#">Logout</a>
+                  </li>
+                {{else}}
+                  <li class="nav-item">
+                    <a class="nav-link" href="/register">Register</a>
+                  </li>
+                  <li class="nav-item ms-3">
+                    <a class="nav-link" href="/login">Login</a>
+                  </li>
+                {{/if}}
+              </ul>
+              <a class="btn btn-danger btn-submit ms-5" href="/contact">Contact Me</a>
             </div>
+          </div>
         </div>
-    </nav>
-    <div class="hamburger-nav-container" id="hamburger-nav-container">
-        <a href="/" class="active">Home</a>
-        <a href="/blog">Blog</a>
-        <a href="/contact">Contact Me</a>
-    </div>
+      </nav>
 
-    <section class="profile-container">
+      {{#if messages.success}}
+        <div class="alert alert-success" role="alert">
+          <div class="container">
+            {{messages.success}}
+          </div>
+        </div>
+      {{/if}}
 
-        <div class="left">
-
-            <img style="width: 100%;" src="/assets/image/gojo.jpg" alt="gojo image">
-            <h1>Surya Elidanto</h1>
-            <p>I became a superstar to make awesome app and software to bring new life</p>
-
-            <div>
-                <i class="fa-brands fa-linkedin"></i>
-                <i class="fa-brands fa-linkedin fa-xl"></i>
-            </div>
-
-            <p>Dumbways</p>
-
-            <table border="1" style="width: 100%;">
-                <tr>
-                    <th>Project Name</th>
-                    <th>Year</th>
-                </tr>
-                <tr>
-                    <td>Personal Web</td>
-                    <td>2023</td>
-                </tr>
-            </table>
+      <div class="container d-flex mt-5">
+        <div class="card p-3" style="max-width: 22rem; flex: 40%;">
+          <img src="/assets/images/gojo.jpg" class="card-img-top rounded" alt="man">
+          <div class="my-3">
+            <h3 style="margin: 0;">Surya Elidanto</h3>
+            <p style="margin: 0;">I became a superstar to make awesome app and software to bring new life</p>
+          </div>
+          
+          <table class="table table-bordered text-center">
+            <thead>
+              <tr>
+                <th scope="col">Project Name</th>
+                <th scope="col">Year</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Dumbways Mobile App</td>
+                <td>2022</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
-        <div class="right">
-            <h2>What i do</h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae deserunt dolores, harum rerum
-            laboriosam earum totam dolorem debitis impedit ipsam inventore sint quisquam modi eaque quis, unde nemo
-            magni ipsum?
+        <div class="ms-5" style="flex: 70%;">
+          <h1 >What i do</h1>
+          <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book. It has survived not
+            only five centuries, but also the leap into electronic typesetting,
+            remaining essentially unchanged.
+          </p>
 
-            <div class="skill">
-                <div>
-                    <img src="/assets/images/logo.png" alt="" srcset="">
-                    <h2>Javascript</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, ea!</p>
-                </div>
-                <div>
-                    <img src="/assets/images/logo.png" alt="" srcset="">
-                    <h2>Github</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, ea!</p>
-                </div>
+          <div class="d-flex mt-4">
+            <div class="item-skill">
+              <img src="/assets/images/logo.png" />
+            <h5>Frontend Developer</h5>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum, temporibus.
+            </p>
+          </div>
 
-                <div>
-                    <img src="/assets/images/logo.png" alt="" srcset="">
-                    <h2>Deployment</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis, ea!</p>
-                </div>
+          <div class="item-skill">
+            <img src="/assets/images/logo.png" />
+            <h5>Backend Developer</h5>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum,
+              temporibus.
+            </p>
+          </div>
+
+          <div class="item-skill">
+            <img src="/assets/images/logo.png" />
+            <h5>Fullstack Developer</h5>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum,
+              temporibus.
+            </p>
+          </div>
+          </div>
+
+          <div class="container-sosmed">
+            <h3>Found Me On</h3>
+            <div class="list-sosmed">
+              <i class="fa-brands fa-facebook-f"></i>
+              <i class="fa-brands fa-instagram"></i>
+              <i class="fa-brands fa-twitter"></i>
             </div>
-
-            <div class="social-media">
-                <h2>Found Me on</h2>
-                <i class="fa-brands fa-facebook"></i>
-                <i class="fa-brands fa-twitter"></i>
-                <i class="fa-brands fa-instagram"></i>
-            </div>
-
+          </div>
         </div>
-    </section>
-
-    <script src="/assets/js/nav.js"></script>
-</body>
-
+      </div>
+    </body>
 </html>

@@ -21,3 +21,25 @@ UPDATE public.tb_users
 DELETE => Keyword (table destination) where condition
 DELETE FROM public.tb_users
 	WHERE <condition>;
+
+
+
+
+
+
+
+
+######################### AUTH 	#########################
+- AUTHENTICATION = Proses mengenali who's you ?  
+- ENCRYPTION = Proses encrypsi untuk mengamankan dalam sebuah kode ?
+- SESSION = Batas waktu saat mengakses interface / batas waktu saat berkomunikasi ?
+
+REGISTRASI
+- MENAMBAHKAN USER ? TABEL USER ? MEMBUAT FORM REGISTER BISA DIAKSES ? BAGAIMANA MENANGKAP DATA DARI FORM ? HASHING PASSWORD ? INSERT DATABASE ?
+
+EXAMPLE : PASS => Input : megachan, Salt : yiownbdifbdn <=> 12bccmsu5ldfalnoia350hdfak
+
+
+
+LOGIN
+- MEMBUAT FORM LOGIN BISA DIAKSES ? BAGAIMANA MENANGKAP DATA DARI FORM ? MENCARI DATA DARI DATABASE ? BUAT SESI SETELAH LOGIN
