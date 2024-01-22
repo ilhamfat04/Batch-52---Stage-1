@@ -3,6 +3,7 @@ const dbPool = require('./src/connection/index')
 const bcrypt = require('bcrypt');
 const session = require('express-session')
 const flash = require('express-flash')
+const upload = require('./src/middlewares/uploadFile')
 const app = express()
 const port = 5000
 
@@ -16,6 +17,7 @@ app.set('view engine', 'hbs')
 app.set('views', 'src/views')
 
 app.use('/assets', express.static('src/assets'))
+app.use('/uploads', express.static('src/uploads'))
 app.use(express.urlencoded({ extended: false })) // body parser
 
 // middleware session
@@ -37,7 +39,7 @@ app.get('/contact', contact)
 app.get('/blog', blog)
 app.get('/blog-detail/:id', blogDetail)
 app.get('/add-blog', addBlog)
-app.post('/blog', handlePostBlog)
+app.post('/blog', upload.single('image'), handlePostBlog)
 app.get('/delete/:id', handleDeleteBlog)
 app.get('/edit-blog/:id', editBlog)
 app.get('/register', formRegister)
@@ -77,12 +79,16 @@ function contact(req, res) {
 
 async function blog(req, res) {
     try {
-        const query = await SequelizePool.query("SELECT * FROM blogs", { type: QueryTypes.SELECT })
+        const query = await SequelizePool.query(`SELECT blogs.id, title, content, image, blogs."createdAt", users.name AS author FROM blogs LEFT JOIN users ON blogs.author = users.id ORDER BY blogs.id DESC`, { type: QueryTypes.SELECT })
+
         const data = query.map(res => ({
             ...res,
-            author: "Megawati",
-            image: "https://img.freepik.com/free-photo/modern-office-space-with-desktops-with-modern-computers-created-with-generative-ai-technology_185193-110089.jpg?w=826&t=st=1705553908~exp=1705554508~hmac=e65ecda5f1b0cc049b17c786b0674845bdd02f9ac3dcda91ed3ae13847e2c389"
+            isLogin: req.session.isLogin
+            // author: "Megawati",
+            // image: "https://img.freepik.com/free-photo/modern-office-space-with-desktops-with-modern-computers-created-with-generative-ai-technology_185193-110089.jpg?w=826&t=st=1705553908~exp=1705554508~hmac=e65ecda5f1b0cc049b17c786b0674845bdd02f9ac3dcda91ed3ae13847e2c389"
         }))
+
+        console.log(data)
 
         res.render('blog', { 
             data,
@@ -103,14 +109,21 @@ function blogDetail(req, res) {
 }
 
 function addBlog(req, res) {
-    const addBlogTitle = "Add Blog"
-    res.render("add-blog", { data: addBlogTitle })
+    const isLogin = req.session.isLogin
+    const user = req.session.user
+
+    res.render("add-blog", { isLogin, user })
 }
 
 async function handlePostBlog(req, res) {
     try {
         const { title, content } = req.body
-        const query = await SequelizePool.query(`INSERT INTO blogs(title, content, "createdAt", "updatedAt") VALUES ('${title}','${content}', NOW(), NOW())`)
+        const image = req.file.filename
+        const author = req.session.idUser
+
+        console.log(image)
+
+        await SequelizePool.query(`INSERT INTO blogs(title, content, image, author, "createdAt", "updatedAt") VALUES ('${title}','${content}', '${image}', ${author}, NOW(), NOW())`)
 
         res.redirect('/blog')
     } catch (error) {
@@ -172,6 +185,7 @@ async function isLogin(req, res) {
             } else {
                 req.session.isLogin = true
                 req.session.user = checkEmail[0].name
+                req.session.idUser = checkEmail[0].id
                 req.flash('success', 'Welcome bwangggggg !!!!');
                 return res.redirect('/')
             }

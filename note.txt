@@ -43,3 +43,40 @@ EXAMPLE : PASS => Input : megachan, Salt : yiownbdifbdn <=> 12bccmsu5ldfalnoia35
 
 LOGIN
 - MEMBUAT FORM LOGIN BISA DIAKSES ? BAGAIMANA MENANGKAP DATA DARI FORM ? MENCARI DATA DARI DATABASE ? BUAT SESI SETELAH LOGIN
+
+
+
+
+
+
+
+
+######################### RELATION	#########################
+- Relation => Mengkombinasikan antara table berdasarkan primary dan foreign key.
+- foreign key => Kunci asing.
+- jenis relasi tabel => 1:1 (hanya memiliki 1 relasi), 1:n (1 table bisa memiliki lebih dari 1 relasi), n:n (banyak tabel memiliki banyak relasi)
+
+
+tabel USER
+- id, name, username/email, password, level
+
+tabel Profile
+- id, gender, address, age, id_user(fk)
+
+
+- primary key, foreign key
+
+- EXAMPLE QUERIES
+INSERT INTO public.audience(name, gender, id_address)
+VALUES ('Samsul','male', 1);
+INSERT INTO public.audience(name, gender, id_address)
+VALUES ('Megawati','female', 2);
+INSERT INTO public.audience(name, gender)
+VALUES ('Putri Maharani','female');
+INSERT INTO public.audience(name, gender, id_address)
+VALUES ('Reza Ganteng','male', 2);
+
+SELECT u.id, u.name, u.gender, 
+a.name AS address, a.kode_pos 
+FROM audience u INNER JOIN address a
+ON u.id_address = a.id;
